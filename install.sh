@@ -133,7 +133,8 @@ cat <<'MSG'
 
 Done. Next steps:
   - Start Claude Code in the project; trust the folder / marketplace when prompted.
-  - Run /mcp to log in to each MCP server (Canva, Figma, Supabase, Vercel, ...).
-  - Connectors like Gmail, Google Drive, Spotify, Floot, Metricool, HyperFrames and ElevenLabs
-    come from your claude.ai account: sign in to Claude Code with the same account.
+  - Run /mcp to log in to each MCP server (Canva, Figma, Supabase, Vercel, ElevenLabs, ...).
+  - Optional: scripts/add-credentialed-mcps.sh adds GitHub and Google Workspace servers.
+  - Microsoft 365 and claude.ai-hosted connectors come from your claude.ai account:
+    sign in to Claude Code with the same account.
 MSG

@@ -7,6 +7,13 @@
     "netlify": { "type": "http", "url": "https://netlify-mcp.netlify.app/mcp" },
     "cloudflare-bindings": { "type": "http", "url": "https://bindings.mcp.cloudflare.com/mcp" },
     "hugging-face": { "type": "http", "url": "https://huggingface.co/mcp" },
-    "notion": { "type": "http", "url": "https://mcp.notion.com/mcp" }
+    "notion": { "type": "http", "url": "https://mcp.notion.com/mcp" },
+    "elevenlabs": { "type": "http", "url": "https://api.elevenlabs.io/v1/mcp" },
+    "floot": { "type": "http", "url": "https://mcp.floot.com/mcp" },
+    "hyperframes": { "type": "http", "url": "https://mcp.heygen.com/mcp/hyperframes/" },
+    "metricool": { "type": "http", "url": "https://ai.metricool.com/mcp" },
+    "typefully": { "type": "http", "url": "https://mcp.typefully.com/mcp" },
+    "spotify": { "type": "http", "url": "https://mcp-gateway-external-pilot.spotify.net/mcp" },
+    "instapods": { "type": "http", "url": "https://app.instapods.com/api/mcp" }
   }
 }

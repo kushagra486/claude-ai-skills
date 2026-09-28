@@ -14,10 +14,13 @@ Installs everything from https://github.com/kushagra486/claude-ai-skills into a 
   pdf, pptx, prompt-maximizer, session-start-hook, skill-creator, slack-gif-creator, theme-factory,
   toolkit-setup, ui-ux-pro-max, web-artifacts-builder, xlsx.
 - **MCP servers** (via the plugin's `.mcp.json`, OAuth on first use): Canva, Figma, Supabase,
-  Vercel, Netlify, Cloudflare Developer Platform, Hugging Face, Notion.
-- **claude.ai-only connectors** (Gmail, Google Drive, Google Calendar, Floot, HyperFrames,
-  Metricool, ElevenLabs, Spotify, Typefully, Microsoft 365, InstaPods): these can't be put in a file.
-  They come from the user's claude.ai account when Claude Code is signed in with that account.
+  Vercel, Netlify, Cloudflare Developer Platform, Hugging Face, Notion, ElevenLabs, Floot,
+  HyperFrames, Metricool, Typefully, Spotify, InstaPods.
+- **Credentialed MCP servers** (`scripts/add-credentialed-mcps.sh`, user scope): GitHub
+  (`GITHUB_PAT`) and Google Workspace — Gmail, Drive, Calendar, Docs, Sheets, Slides
+  (`GOOGLE_OAUTH_CLIENT_ID` + `MCP_CLIENT_SECRET`). Only offer this when the user wants them.
+- **claude.ai-only connectors** (Microsoft 365, claude.ai-hosted Gmail/Drive/Calendar): these come
+  from the user's claude.ai account when Claude Code is signed in with that account.
 
 ## Steps
 

@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Kushagra's personal Claude toolkit: every skill, plugin skill and MCP connector, installable into any project.",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "kushagra-toolkit",
       "source": "./plugins/kushagra-toolkit",
-      "description": "All of Kushagra's Claude skills (docs, design, art, MCP building, prompt maximizing, UI/UX, ...) plus remote MCP servers for Canva, Figma, Supabase, Vercel, Netlify, Cloudflare, Hugging Face and Notion.",
-      "version": "1.0.0",
+      "description": "All of Kushagra's Claude skills (docs, design, art, MCP building, prompt maximizing, UI/UX, ...) plus 15 remote MCP servers (Canva, Figma, Supabase, Vercel, Netlify, Cloudflare, Hugging Face, Notion, ElevenLabs, Floot, HyperFrames, Metricool, Typefully, Spotify, InstaPods).",
+      "version": "1.1.0",
       "category": "productivity",
       "keywords": ["skills", "mcp", "toolkit", "design", "documents"]
     }

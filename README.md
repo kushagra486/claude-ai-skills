@@ -69,15 +69,44 @@ After installing, restart Claude Code, accept the trust prompt and run `/mcp` to
 
 ### MCP servers (`plugins/kushagra-toolkit/.mcp.json`)
 
-Remote HTTP servers that authenticate with OAuth on first use via `/mcp`:
-Canva, Figma, Supabase, Vercel, Netlify, Cloudflare Developer Platform, Hugging Face, Notion.
+Official remote HTTP servers for every connector on my claude.ai account. They log in with OAuth on
+first use via `/mcp`; no API keys are stored in this repo.
+
+| Server | URL |
+|---|---|
+| Canva | https://mcp.canva.com/mcp |
+| Figma | https://mcp.figma.com/mcp |
+| Supabase | https://mcp.supabase.com/mcp |
+| Vercel | https://mcp.vercel.com |
+| Netlify | https://netlify-mcp.netlify.app/mcp |
+| Cloudflare Developer Platform | https://bindings.mcp.cloudflare.com/mcp |
+| Hugging Face | https://huggingface.co/mcp |
+| Notion | https://mcp.notion.com/mcp |
+| ElevenLabs | https://api.elevenlabs.io/v1/mcp |
+| Floot | https://mcp.floot.com/mcp |
+| HyperFrames by HeyGen | https://mcp.heygen.com/mcp/hyperframes/ |
+| Metricool | https://ai.metricool.com/mcp |
+| Typefully | https://mcp.typefully.com/mcp |
+| Spotify | https://mcp-gateway-external-pilot.spotify.net/mcp |
+| InstaPods | https://app.instapods.com/api/mcp |
+
+### Servers that need your own credentials
+
+[`scripts/add-credentialed-mcps.sh`](scripts/add-credentialed-mcps.sh) adds these at user scope
+(every project), each only when its credentials are set:
+
+- **GitHub**: `GITHUB_PAT=ghp_... scripts/add-credentialed-mcps.sh`
+- **Google Workspace** (Gmail, Drive, Calendar, Docs, Sheets, Slides): Google's official servers
+  require your own OAuth client. Follow
+  [Google's setup guide](https://developers.google.com/workspace/guides/configure-mcp-servers),
+  add `http://localhost:8765/callback` as a redirect URI, then run
+  `GOOGLE_OAUTH_CLIENT_ID=... MCP_CLIENT_SECRET=... scripts/add-credentialed-mcps.sh`.
 
 ### claude.ai connectors
 
-These connectors live in my claude.ai account and can't be exported to a config file:
-Gmail, Google Drive, Google Calendar, Floot, HyperFrames by HeyGen, Metricool, ElevenLabs, Spotify,
-Typefully, Microsoft 365, InstaPods. Claude Code picks up claude.ai connectors when you are signed in
-with the same claude.ai account, so they follow you into every project automatically.
+Microsoft 365 (and the claude.ai-hosted Gmail / Drive / Calendar connectors) run on Anthropic's own
+OAuth app, so they only work through your claude.ai account. Claude Code picks up claude.ai connectors
+when you sign in with the same account, so these follow you into every project automatically.
 
 ## Repository layout
 
@@ -89,6 +118,7 @@ plugins/kushagra-toolkit/
   skills/<name>/SKILL.md               # every skill
 install.sh                             # apply to a project (plugin / copy / global)
 scripts/sync-skills.sh                 # SessionStart hook: sync skills into ~/.claude/skills
+scripts/add-credentialed-mcps.sh       # add GitHub + Google Workspace MCP servers (your credentials)
 templates/project-settings.json        # minimal .claude/settings.json to enable the plugin
 ```
 
