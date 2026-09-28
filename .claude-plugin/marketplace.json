@@ -1,0 +1,21 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "kushagra-skills",
+  "owner": {
+    "name": "kushagra486"
+  },
+  "metadata": {
+    "description": "Kushagra's personal Claude toolkit: every skill, plugin skill and MCP connector, installable into any project.",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "kushagra-toolkit",
+      "source": "./plugins/kushagra-toolkit",
+      "description": "All of Kushagra's Claude skills (docs, design, art, MCP building, prompt maximizing, UI/UX, ...) plus remote MCP servers for Canva, Figma, Supabase, Vercel, Netlify, Cloudflare, Hugging Face and Notion.",
+      "version": "1.0.0",
+      "category": "productivity",
+      "keywords": ["skills", "mcp", "toolkit", "design", "documents"]
+    }
+  ]
+}

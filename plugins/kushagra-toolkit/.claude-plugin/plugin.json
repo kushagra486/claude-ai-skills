@@ -1,0 +1,11 @@
+{
+  "name": "kushagra-toolkit",
+  "version": "1.0.0",
+  "description": "All of Kushagra's Claude skills plus remote MCP connectors, bundled as one plugin.",
+  "author": {
+    "name": "kushagra486"
+  },
+  "homepage": "https://github.com/kushagra486/claude-ai-skills",
+  "repository": "https://github.com/kushagra486/claude-ai-skills",
+  "keywords": ["skills", "mcp", "toolkit"]
+}

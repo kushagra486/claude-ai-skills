@@ -1,0 +1,10 @@
+{
+  "extraKnownMarketplaces": {
+    "kushagra-skills": {
+      "source": { "source": "github", "repo": "kushagra486/claude-ai-skills" }
+    }
+  },
+  "enabledPlugins": {
+    "kushagra-toolkit@kushagra-skills": true
+  }
+}
