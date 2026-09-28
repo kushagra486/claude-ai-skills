@@ -1,6 +1,6 @@
 {
   "name": "kushagra-toolkit",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "All of Kushagra's Claude skills plus remote MCP connectors, bundled as one plugin.",
   "author": {
     "name": "kushagra486"

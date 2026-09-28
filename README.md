@@ -82,7 +82,7 @@ first use via `/mcp`; no API keys are stored in this repo.
 | Cloudflare Developer Platform | https://bindings.mcp.cloudflare.com/mcp |
 | Hugging Face | https://huggingface.co/mcp |
 | Notion | https://mcp.notion.com/mcp |
-| ElevenLabs | https://api.elevenlabs.io/v1/mcp |
+| ElevenLabs | https://api.us.elevenlabs.io/v1/mcp |
 | Floot | https://mcp.floot.com/mcp |
 | HyperFrames by HeyGen | https://mcp.heygen.com/mcp/hyperframes/ |
 | Metricool | https://ai.metricool.com/mcp |
