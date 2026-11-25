@@ -1,0 +1,1 @@
+{ "name": "control-board", "version": "0.1.0", "description": "Side-pane control board: tool log, model routing per task type, multi-agent runs, daily project check and suggestions", "types": "./types/index.d.ts" }

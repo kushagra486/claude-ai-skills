@@ -127,3 +127,18 @@ templates/project-settings.json        # minimal .claude/settings.json to enable
 Add or edit skills under `plugins/kushagra-toolkit/skills/`, bump `version` in
 `plugins/kushagra-toolkit/.claude-plugin/plugin.json`, and push. Projects using `plugin` mode pick up
 changes via `/plugin marketplace update kushagra-skills` and the SessionStart sync hook.
+
+## Mods
+
+Claude Code mods (hook modules) installable from this marketplace:
+
+| Mod | What it does |
+|---|---|
+| `obsidian-theme` | Premium dark dashboard look (desktop and mobile apps) |
+| `control-board` | Side pane; `/route` picks a model per task type; `/watch` and `/daily-check` report project git status |
+| `safety-guard` | Blocks `rm -rf` on broad paths, force-push, `reset --hard`, pipe-to-shell, and edits to `.env`/SSH keys |
+| `session-organizer` | `/organize-sessions` tags every session by project/repo and flags junk (tags only) |
+
+```
+/plugin install obsidian-theme@kushagra-skills
+```
