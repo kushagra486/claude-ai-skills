@@ -36,10 +36,10 @@ export const register: Register = on => {
 
     if (arg === 'daily' && timer === undefined) {
       timer = $.clock.every(DAY, async () => {
-        await $.prompt.submit({ text: PLAN })
+        void $.prompt.submit({ text: PLAN })
       })
     }
-    await $.prompt.submit({ text: PLAN, asUser: true })
+    void $.prompt.submit({ text: PLAN, asUser: true })
 
     return {
       text: arg === 'daily'
