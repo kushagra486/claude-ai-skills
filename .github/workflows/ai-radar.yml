@@ -1,0 +1,46 @@
+name: AI radar (weekly)
+
+on:
+  schedule:
+    - cron: "17 5 * * 1"   # Mondays 05:17 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  radar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Discover candidates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 automation/radar/discover.py
+
+      - name: Draft skills with Claude
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python3 automation/radar/generate.py
+
+      - name: Export for other tools
+        run: python3 automation/radar/export.py
+
+      - name: Open draft PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then echo "nothing new"; exit 0; fi
+          BRANCH="radar/$(date -u +%F)"
+          git config user.name "ai-radar[bot]"
+          git config user.email "ai-radar@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add -A
+          git commit -m "AI radar: weekly discoveries $(date -u +%F)"
+          git push -u origin "$BRANCH"
+          gh pr create --draft --base "${{ github.event.repository.default_branch }}" \
+            --title "AI radar: weekly discoveries $(date -u +%F)" \
+            --body "Auto-generated. Review each new skill under plugins/ai-radar/skills/ (drafted from untrusted READMEs, so check for anything odd) and the digest in automation/radar/digests/. Delete skills you do not want, then merge."

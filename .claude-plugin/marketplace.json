@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Kushagra's personal Claude toolkit: every skill, plugin skill and MCP connector, installable into any project.",
-    "version": "1.1.1"
+    "version": "1.2.0"
   },
   "plugins": [
     {
@@ -15,7 +15,26 @@
       "description": "All of Kushagra's Claude skills (docs, design, art, MCP building, prompt maximizing, UI/UX, ...) plus 15 remote MCP servers (Canva, Figma, Supabase, Vercel, Netlify, Cloudflare, Hugging Face, Notion, ElevenLabs, Floot, HyperFrames, Metricool, Typefully, Spotify, InstaPods).",
       "version": "1.1.1",
       "category": "productivity",
-      "keywords": ["skills", "mcp", "toolkit", "design", "documents"]
+      "keywords": [
+        "skills",
+        "mcp",
+        "toolkit",
+        "design",
+        "documents"
+      ]
+    },
+    {
+      "name": "ai-radar",
+      "source": "./plugins/ai-radar",
+      "description": "Weekly auto-discovered free/open-source AI tools, agents, MCP servers and models from GitHub, drafted as skills (reviewed via draft PR).",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "ai",
+        "open-source",
+        "discovery",
+        "skills"
+      ]
     }
   ]
 }

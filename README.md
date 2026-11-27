@@ -127,3 +127,27 @@ templates/project-settings.json        # minimal .claude/settings.json to enable
 Add or edit skills under `plugins/kushagra-toolkit/skills/`, bump `version` in
 `plugins/kushagra-toolkit/.claude-plugin/plugin.json`, and push. Projects using `plugin` mode pick up
 changes via `/plugin marketplace update kushagra-skills` and the SessionStart sync hook.
+
+## AI radar (weekly auto-discovery)
+
+A GitHub Action ([`.github/workflows/ai-radar.yml`](.github/workflows/ai-radar.yml)) runs every Monday:
+
+1. `automation/radar/discover.py` searches GitHub for new and fast-rising free/open-source AI projects
+   (agents, MCP servers, local/open models, automation tools) and writes a digest to `automation/radar/digests/`.
+2. `generate.py` has Claude draft a skill per top pick into `plugins/ai-radar/skills/` (READMEs are treated as
+   untrusted; output is screened for risky commands).
+3. `export.py` rebuilds the `ai-radar` index skill and exports everything for other tools.
+4. A **draft PR** is opened for you to review and merge.
+
+**Setup:** add repo secret `ANTHROPIC_API_KEY`, and enable Settings > Actions > General > "Allow GitHub Actions to
+create and approve pull requests". Run it any time from the Actions tab (workflow_dispatch). Without the key it
+still produces the digest.
+
+**Using the results** (after merging):
+
+| Where | How |
+|---|---|
+| Claude Code | `/plugin install ai-radar@kushagra-skills` (or the existing sync hook) |
+| Claude.ai chat | upload zips from `exports/claude-ai/` in Settings > Capabilities > Skills |
+| Codex / Gemini CLI / others | copy `exports/AGENTS.md` / `exports/GEMINI.md` into your project |
+| Cursor | copy `exports/cursor/rules/` to `.cursor/rules/` |
