@@ -151,3 +151,12 @@ still produces the digest.
 | Claude.ai chat | upload zips from `exports/claude-ai/` in Settings > Capabilities > Skills |
 | Codex / Gemini CLI / others | copy `exports/AGENTS.md` / `exports/GEMINI.md` into your project |
 | Cursor | copy `exports/cursor/rules/` to `.cursor/rules/` |
+
+## Free video pipeline
+
+[`.github/workflows/free-video.yml`](.github/workflows/free-video.yml) turns the next unused AI radar pick into a
+short explainer MP4 each Tuesday: Claude writes the script, Kokoro narrates on CPU, HyperFrames renders HTML to
+video, and the MP4 is attached to a GitHub Release (`video-<slug>`). No GPU or Pi needed; just the
+`ANTHROPIC_API_KEY` secret. Run it manually from the Actions tab, optionally with a `repo` input. See the
+`free-video-pipeline` skill. The render and narration steps have not been run end to end yet, so expect to tweak
+on the first run.
