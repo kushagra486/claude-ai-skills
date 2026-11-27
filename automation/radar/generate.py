@@ -3,15 +3,18 @@
 
 README content is untrusted: it is passed as quoted data, the model must return JSON,
 we build the file ourselves, and output is screened before it is written.
-Skips quietly (digest-only run) when ANTHROPIC_API_KEY is not set.
+Uses the multi-provider router (automation/llm); skips quietly (digest-only run) when no LLM key is set.
 """
 import datetime as dt
 import json
 import os
+import pathlib
 import re
 import sys
 
-from common import SKILLS, STATE, http, load_config, read_json, slugify, write_json
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1] / "llm"))
+from common import SKILLS, STATE, read_json, slugify, write_json  # noqa: E402
+from router import AllProvidersExhausted, Router  # noqa: E402
 
 SYSTEM = """You write concise Claude Code / Claude.ai "skills" (SKILL.md files) that teach an AI agent \
 when and how to use a specific open-source AI tool or project.
@@ -41,22 +44,16 @@ def screen(text):
     return [p for p in BANNED if re.search(p, text, re.I)]
 
 
-def call_claude(model, repo):
+def call_llm(router, repo):
     user = (
         f"Project: {repo['full_name']}\nURL: {repo['url']}\nLicense: {repo['license']}\n"
         f"Stars: {repo['stars']}\nLanguage: {repo['language']}\nGitHub description: {repo['description']}\n\n"
         f"<untrusted_readme>\n{repo['readme']}\n</untrusted_readme>"
     )
-    payload = json.dumps({
-        "model": model, "max_tokens": 2000, "system": SYSTEM,
-        "messages": [{"role": "user", "content": user}],
-    }).encode()
-    raw = http("https://api.anthropic.com/v1/messages", {
-        "x-api-key": os.environ["ANTHROPIC_API_KEY"],
-        "anthropic-version": "2023-06-01", "content-type": "application/json",
-    }, data=payload)
-    text = "".join(b.get("text", "") for b in json.loads(raw)["content"])
-    return json.loads(text[text.index("{"): text.rindex("}") + 1])
+
+    def ok(o):
+        assert isinstance(o["description"], str) and isinstance(o["body"], str)
+    return router.call_json(SYSTEM, user, ok, max_tokens=2000)
 
 
 def render(repo, out, date):
@@ -82,18 +79,16 @@ def main():
     if not data["picks"]:
         print("no picks; nothing to generate")
         return
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        print("ANTHROPIC_API_KEY not set: digest only, no skills drafted", file=sys.stderr)
+    router = Router()
+    if not router.providers:
+        print("no LLM API key set (GEMINI_API_KEY, GROQ_API_KEY, GITHUB_TOKEN, ...): digest only", file=sys.stderr)
         return
-    model = load_config()["model"]
     seen = read_json(STATE / "seen.json", {})
     made = 0
     for repo in data["picks"]:
         slug = slugify(repo["full_name"])
         try:
-            out = call_claude(model, repo)
-            if not isinstance(out.get("description"), str) or not isinstance(out.get("body"), str):
-                raise ValueError("bad JSON shape")
+            out = call_llm(router, repo)
             text = render(repo, out, data["date"])
             bad = screen(text)
             if bad or not (20 <= len(out["description"]) <= 600) or len(out["body"]) > 6000:
@@ -109,7 +104,7 @@ def main():
         made += 1
         print(f"drafted {slug}")
     write_json(STATE / "seen.json", seen)
-    print(f"{made}/{len(data['picks'])} skills drafted")
+    print(f"{made}/{len(data['picks'])} skills drafted; {router.summary()}")
 
 
 if __name__ == "__main__":

@@ -11,6 +11,7 @@ on:
 
 permissions:
   contents: write   # create a release holding the MP4
+  models: read      # GitHub Models (free LLM) via GITHUB_TOKEN
 
 env:
   BUILD_DIR: build
@@ -46,10 +47,22 @@ jobs:
         run: |
           if [ -f build/topic.json ]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "No topic; stopping."; fi
 
-      - name: Write script (Claude)
+      - name: Restore LLM rate-limit state
+        uses: actions/cache@v4
+        with:
+          path: .llm-state
+          key: llm-state-${{ github.run_id }}
+          restore-keys: llm-state-
+
+      - name: Write script (LLM router, sectioned)
         if: steps.gate.outputs.go == 'true'
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          OPENROUTER_API_KEY: ${{ secrets.OPENROUTER_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LLM_STATE: .llm-state/state.json
         run: python3 automation/video/script.py
 
       - name: Narrate (Kokoro, CPU)

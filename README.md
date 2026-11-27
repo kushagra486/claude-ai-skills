@@ -134,12 +134,12 @@ A GitHub Action ([`.github/workflows/ai-radar.yml`](.github/workflows/ai-radar.y
 
 1. `automation/radar/discover.py` searches GitHub for new and fast-rising free/open-source AI projects
    (agents, MCP servers, local/open models, automation tools) and writes a digest to `automation/radar/digests/`.
-2. `generate.py` has Claude draft a skill per top pick into `plugins/ai-radar/skills/` (READMEs are treated as
+2. `generate.py` has the LLM router draft a skill per top pick into `plugins/ai-radar/skills/` (READMEs are treated as
    untrusted; output is screened for risky commands).
 3. `export.py` rebuilds the `ai-radar` index skill and exports everything for other tools.
 4. A **draft PR** is opened for you to review and merge.
 
-**Setup:** add repo secret `ANTHROPIC_API_KEY`, and enable Settings > Actions > General > "Allow GitHub Actions to
+**Setup:** add at least one free LLM key as a repo secret (see *LLM router* below), and enable Settings > Actions > General > "Allow GitHub Actions to
 create and approve pull requests". Run it any time from the Actions tab (workflow_dispatch). Without the key it
 still produces the digest.
 
@@ -155,9 +155,9 @@ still produces the digest.
 ## Free video pipeline
 
 [`.github/workflows/free-video.yml`](.github/workflows/free-video.yml) turns the next unused AI radar pick into a
-short explainer MP4 each Tuesday: Claude writes the script, Kokoro narrates on CPU, HyperFrames renders HTML to
-video, and the MP4 is attached to a GitHub Release (`video-<slug>`). No GPU or Pi needed; just the
-`ANTHROPIC_API_KEY` secret. Run it manually from the Actions tab, optionally with a `repo` input. See the
+short explainer MP4 each Tuesday: the LLM router writes the script in sections, Kokoro narrates on CPU, HyperFrames renders HTML to
+video, and the MP4 is attached to a GitHub Release (`video-<slug>`). No GPU or Pi needed; just one free LLM key
+(see *LLM router*). Run it manually from the Actions tab, optionally with a `repo` input. See the
 `free-video-pipeline` skill. The render and narration steps have not been run end to end yet, so expect to tweak
 on the first run.
 
@@ -175,3 +175,21 @@ Claude Code mods (hook modules) installable from this marketplace:
 ```
 /plugin install obsidian-theme@kushagra-skills
 ```
+
+## LLM router (free, multi-provider, rate-limit aware)
+
+`automation/llm/router.py` lets every automation use several LLM providers at once, so no paid key is required:
+
+- **Providers** (`automation/llm/providers.json`, in preference order): Gemini, Groq, GitHub Models, OpenRouter,
+  Anthropic. A provider is used only if its key is set. GitHub Models needs no secret (the Actions `GITHUB_TOKEN`).
+  Model IDs and limits change often; edit them in that file.
+- **Rate limits:** per-provider rpm/rpd are counted in a sliding window (with a safety margin) and persisted via
+  the Actions cache. A provider at its limit is skipped; a `429` puts it on cooldown (honouring `Retry-After`).
+- **Shifting:** the call moves to the next provider on a limit, error, or invalid/unparseable output. If all are
+  limited it waits when short, otherwise fails with a clear message.
+- **Sectioned scripts:** `automation/video/script.py` extracts facts, plans scenes, narrates each scene with the
+  previous line for continuity, then does a stitching pass (discarded if it breaks the structure). Only the facts
+  step reads the untrusted README.
+
+Secrets (all optional, add any you have): `GEMINI_API_KEY` (free, aistudio.google.com), `GROQ_API_KEY` (free),
+`OPENROUTER_API_KEY` (free models), `ANTHROPIC_API_KEY` (paid). Test with `python3 automation/llm/test_router.py`.
