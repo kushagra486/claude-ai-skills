@@ -62,6 +62,19 @@
       "keywords": [
         "mod"
       ]
+    },
+    {
+      "name": "ai-radar",
+      "source": "./plugins/ai-radar",
+      "description": "Weekly auto-discovered free/open-source AI tools, agents, MCP servers and models from GitHub, drafted as skills (reviewed via draft PR).",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "ai",
+        "open-source",
+        "discovery",
+        "skills"
+      ]
     }
   ]
 }
