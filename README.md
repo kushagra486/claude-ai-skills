@@ -160,3 +160,18 @@ video, and the MP4 is attached to a GitHub Release (`video-<slug>`). No GPU or P
 `ANTHROPIC_API_KEY` secret. Run it manually from the Actions tab, optionally with a `repo` input. See the
 `free-video-pipeline` skill. The render and narration steps have not been run end to end yet, so expect to tweak
 on the first run.
+
+## Mods
+
+Claude Code mods (hook modules) installable from this marketplace:
+
+| Mod | What it does |
+|---|---|
+| `obsidian-theme` | Premium dark dashboard look (desktop and mobile apps) |
+| `control-board` | Side pane; `/route` picks a model per task type; `/watch` and `/daily-check` report project git status |
+| `safety-guard` | Blocks `rm -rf` on broad paths, force-push, `reset --hard`, pipe-to-shell, and edits to `.env`/SSH keys |
+| `session-organizer` | `/organize-sessions` tags every session by project/repo and flags junk (tags only) |
+
+```
+/plugin install obsidian-theme@kushagra-skills
+```

@@ -1,0 +1,1 @@
+{ "name": "session-organizer", "version": "0.1.0", "description": "Adds /organize-sessions: sorts all your Claude Code sessions into projects by app, site or GitHub repo, and groups junk sessions" }

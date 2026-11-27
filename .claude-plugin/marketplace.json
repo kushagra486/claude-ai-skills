@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Kushagra's personal Claude toolkit: every skill, plugin skill and MCP connector, installable into any project.",
-    "version": "1.2.0"
+    "version": "1.1.1"
   },
   "plugins": [
     {
@@ -21,6 +21,46 @@
         "toolkit",
         "design",
         "documents"
+      ]
+    },
+    {
+      "name": "obsidian-theme",
+      "source": "./plugins/obsidian-theme",
+      "description": "Premium dark dashboard theme with gold accents",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "mod"
+      ]
+    },
+    {
+      "name": "control-board",
+      "source": "./plugins/control-board",
+      "description": "Side-pane control board: model routing per task, agents, daily project check",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "mod"
+      ]
+    },
+    {
+      "name": "safety-guard",
+      "source": "./plugins/safety-guard",
+      "description": "Blocks destructive shell commands and edits to secrets files",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "mod"
+      ]
+    },
+    {
+      "name": "session-organizer",
+      "source": "./plugins/session-organizer",
+      "description": "/organize-sessions: groups all sessions into projects by repo/app/site and tags junk",
+      "version": "0.1.0",
+      "category": "productivity",
+      "keywords": [
+        "mod"
       ]
     },
     {
