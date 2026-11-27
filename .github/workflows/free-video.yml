@@ -8,6 +8,11 @@ on:
       repo:
         description: "Optional owner/name to make a video about (default: next unused radar pick)"
         required: false
+      voice_provider:
+        description: "auto = your audio files if present, else Kokoro; kokoro = always synthesize; files = only your files"
+        type: choice
+        options: [auto, kokoro, files]
+        default: auto
 
 permissions:
   contents: write   # create a release holding the MP4
@@ -31,7 +36,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-          cache-dependency-path: automation/video/requirements.txt
+          cache-dependency-path: automation/video/requirements*.txt
 
       - name: System deps
         run: sudo apt-get update && sudo apt-get install -y ffmpeg espeak-ng
@@ -65,10 +70,15 @@ jobs:
           LLM_STATE: .llm-state/state.json
         run: python3 automation/video/script.py
 
-      - name: Narrate (Kokoro, CPU)
+      - name: Voiceover (your audio files and/or Kokoro on CPU)
         if: steps.gate.outputs.go == 'true'
+        env:
+          VOICE_PROVIDER: ${{ inputs.voice_provider }}
         run: |
           pip install -r automation/video/requirements.txt
+          if [ "$(python3 automation/video/tts.py --needs-synth)" = "true" ]; then
+            pip install -r automation/video/requirements-kokoro.txt
+          fi
           python3 automation/video/tts.py
 
       - name: Build composition
@@ -88,5 +98,7 @@ jobs:
           SLUG=$(python3 -c "import json;print(json.load(open('build/topic.json'))['slug'])")
           MP4=$(find build/video -name '*.mp4' | head -n1)
           [ -n "$MP4" ] || { echo "no mp4 rendered"; exit 1; }
-          gh release create "video-$SLUG" "$MP4" --title "Video: $SLUG" \
+          # editable source: script, timing and composition (re-render with `npx hyperframes render`)
+          (cd build && zip -qr ../source.zip topic.json script.json durations.json video -x 'video/*.mp4')
+          gh release create "video-$SLUG" "$MP4" source.zip --title "Video: $SLUG" \
             --notes "Auto-generated explainer. Source: $(python3 -c "import json;print(json.load(open('build/topic.json'))['url'])")"

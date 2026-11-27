@@ -155,7 +155,7 @@ still produces the digest.
 ## Free video pipeline
 
 [`.github/workflows/free-video.yml`](.github/workflows/free-video.yml) turns the next unused AI radar pick into a
-short explainer MP4 each Tuesday: the LLM router writes the script in sections, Kokoro narrates on CPU, HyperFrames renders HTML to
+short explainer MP4 each Tuesday (attached to the release with an editable `source.zip`; use your own voice audio by adding files under `automation/video/audio/<slug>/` and the `voice_provider` input): the LLM router writes the script in sections, Kokoro narrates on CPU, HyperFrames renders HTML to
 video, and the MP4 is attached to a GitHub Release (`video-<slug>`). No GPU or Pi needed; just one free LLM key
 (see *LLM router*). Run it manually from the Actions tab, optionally with a `repo` input. See the
 `free-video-pipeline` skill. The render and narration steps have not been run end to end yet, so expect to tweak
