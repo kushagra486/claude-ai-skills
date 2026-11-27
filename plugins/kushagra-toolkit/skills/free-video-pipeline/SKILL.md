@@ -9,14 +9,14 @@ Code lives in `automation/video/`; workflow in `.github/workflows/free-video.yml
 
 ## Flow
 1. `pick_topic.py`: next unused repo from the AI radar candidates (`automation/radar/state/candidates/`), or `TOPIC_REPO=owner/name`. "Used" = GitHub Releases tagged `video-<slug>`.
-2. `script.py`: Claude writes 5-7 scenes (headline, bullets, narration). README is untrusted; output is screened.
+2. `script.py`: sectioned via the LLM router (`automation/llm/`): facts, outline, per-scene narration, stitch pass. Providers shift automatically on rate limits or bad output. README is untrusted; only the facts step sees it; output is screened.
 3. `tts.py`: Kokoro narration per scene on CPU, `durations.json`.
 4. `build_composition.py`: HTML with `data-start` / `data-duration` / `data-track-index` timing, text HTML-escaped.
 5. `npx hyperframes render` (needs Node 22 + FFmpeg) renders the MP4; the workflow publishes it as a release.
 
 ## Run
 - Automatic: weekly (Tuesdays). Manual: Actions > "Free video (weekly)" > Run workflow (optional `repo`).
-- Needs repo secret `ANTHROPIC_API_KEY`. No GPU, no other keys.
+- Needs at least one LLM key as a repo secret (`GEMINI_API_KEY` or `GROQ_API_KEY` are free); GitHub Models works with none. No GPU.
 
 ## Manual workflow (no Actions)
 Write script in chat, narrate in VoiceStudio or Kokoro, then `npx hyperframes init`, `preview`, `render`.
