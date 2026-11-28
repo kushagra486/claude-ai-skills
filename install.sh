@@ -80,7 +80,13 @@ plugin_settings() {
   "extraKnownMarketplaces": {
     "$MARKETPLACE": { "source": { "source": "github", "repo": "$REPO" } }
   },
-  "enabledPlugins": { "$PLUGIN@$MARKETPLACE": true }
+  "enabledPlugins": {
+    "$PLUGIN@$MARKETPLACE": true,
+    "obsidian-theme@$MARKETPLACE": true,
+    "control-board@$MARKETPLACE": true,
+    "safety-guard@$MARKETPLACE": true,
+    "session-organizer@$MARKETPLACE": true
+  }
 }
 JSON
 }

@@ -1,0 +1,9 @@
+{
+  "name": "ai-radar",
+  "version": "0.1.0",
+  "description": "Weekly auto-discovered free and open-source AI tools, agents, MCP servers and models, drafted as skills.",
+  "author": { "name": "kushagra486" },
+  "homepage": "https://github.com/kushagra486/claude-ai-skills",
+  "repository": "https://github.com/kushagra486/claude-ai-skills",
+  "keywords": ["ai", "open-source", "discovery", "radar", "skills"]
+}
