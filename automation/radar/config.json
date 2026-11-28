@@ -1,0 +1,18 @@
+{
+  "model": "claude-sonnet-5-5",
+  "max_picks_per_run": 6,
+  "readme_char_limit": 12000,
+  "new_repo_window_days": 30,
+  "active_repo_window_days": 7,
+  "min_stars_new": 40,
+  "min_stars_active": 1500,
+  "allowed_licenses": [
+    "mit", "apache-2.0", "bsd-2-clause", "bsd-3-clause", "isc", "mpl-2.0",
+    "gpl-2.0", "gpl-3.0", "lgpl-3.0", "agpl-3.0", "unlicense", "cc0-1.0"
+  ],
+  "topics": [
+    "ai-agents", "agentic-ai", "mcp-server", "model-context-protocol", "claude-code",
+    "llm", "local-llm", "ollama", "rag", "ai-automation", "llm-tools",
+    "open-source-llm", "ai-workflow", "browser-automation"
+  ]
+}

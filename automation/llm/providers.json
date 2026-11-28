@@ -1,0 +1,17 @@
+{
+  "_note": "Order = preference. Model IDs and limits change often: edit them here. Limits are deliberately conservative; 'margin' scales them down further. A provider is used only if its key env var is set.",
+  "margin": 0.8,
+  "max_wait_seconds": 120,
+  "providers": [
+    {"name": "gemini", "kind": "gemini", "model": "gemini-2.5-flash",
+     "key_env": "GEMINI_API_KEY", "rpm": 10, "rpd": 200},
+    {"name": "groq", "kind": "openai", "url": "https://api.groq.com/openai/v1",
+     "model": "llama-3.3-70b-versatile", "key_env": "GROQ_API_KEY", "rpm": 25, "rpd": 1000},
+    {"name": "github-models", "kind": "openai", "url": "https://models.github.ai/inference",
+     "model": "openai/gpt-4.1-mini", "key_env": "GITHUB_TOKEN", "rpm": 10, "rpd": 100},
+    {"name": "openrouter", "kind": "openai", "url": "https://openrouter.ai/api/v1",
+     "model": "deepseek/deepseek-chat-v3-0324:free", "key_env": "OPENROUTER_API_KEY", "rpm": 15, "rpd": 40},
+    {"name": "anthropic", "kind": "anthropic", "model": "claude-sonnet-5-5",
+     "key_env": "ANTHROPIC_API_KEY", "rpm": 40, "rpd": 10000}
+  ]
+}
